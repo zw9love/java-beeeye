@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+   	<constant name="struts.devMode" value="true" />
+   	<constant name="struts.action.extension" value=","/>  
+	<package name="host" namespace="/host" extends="struts-default">
+	<interceptors>
+		<!-- 1.注册拦截器 -->
+		<interceptor name="requestInterceptor" class="lpdata.interceptor.RequestInterceptor"></interceptor>
+		<!-- 2.注册拦截器栈 -->
+		<interceptor-stack name="requestInterceptorStack">
+			<!-- 自定义拦截器引入(建议放在20个拦截器之前) -->
+			<interceptor-ref name="requestInterceptor">
+				 <!-- 指定哪些方法不拦截-->
+				 <!--<param name="excludeMethods">add,delete</param> -->
+				 <!-- 指定哪些方法需要拦截 -->
+				 <!--<param name="includeMethods">add,delete</param>-->
+			</interceptor-ref>
+			<!-- 引用默认的拦截器栈(20个) -->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</interceptor-stack>	
+	</interceptors>
+		<!-- 3.指定包中的默认拦截器栈 -->
+		<default-interceptor-ref name="requestInterceptorStack"></default-interceptor-ref>
+		<global-results>
+			<!-- <result name="methodError" type="redirectAction">
+				<param name="actionName">MethodErrorAction</param>
+			</result>
+			<result name="methodError">
+				/test.html
+			</result> -->
+			<result name="methodError"></result>
+		</global-results>
+		<!--  <action name="host_*" class="lpdata.web.HostAtion" method="{1}"  >-->
+			<!-- <result name="success">/test.html</result> -->
+			<!-- <result name="success">/form.jsp</result> -->
+		<!--</action>-->
+		<!-- <action name="host" class="lpdata.web.HostAtion" method="delete"  ></action>-->
+		<action name="get" class="lpdata.web.HostAtion" method="get"  ></action>
+		<action name="delete" class="lpdata.web.HostAtion" method="delete"  ></action>
+		<action name="add" class="lpdata.web.HostAtion" method="add"  ></action>
+		<action name="put" class="lpdata.web.HostAtion" method="put"  ></action>
+	</package>
+	<package name="menu" namespace="/menu" extends="struts-default">
+	<interceptors>
+		<!-- 1.注册拦截器 -->
+		<interceptor name="requestInterceptor" class="lpdata.interceptor.RequestInterceptor"></interceptor>
+		<!-- 2.注册拦截器栈 -->
+		<interceptor-stack name="requestInterceptorStack">
+			<!-- 自定义拦截器引入(建议放在20个拦截器之前) -->
+			<interceptor-ref name="requestInterceptor">
+				 <!-- 指定哪些方法不拦截-->
+				 <!--<param name="excludeMethods">add,delete</param> -->
+				 <!-- 指定哪些方法需要拦截 -->
+				 <!--<param name="includeMethods">add,delete</param>-->
+			</interceptor-ref>
+			<!-- 引用默认的拦截器栈(20个) -->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</interceptor-stack>	
+	</interceptors>
+		<!-- 3.指定包中的默认拦截器栈 -->
+		<default-interceptor-ref name="requestInterceptorStack"></default-interceptor-ref>
+		<global-results>
+			<!-- <result name="methodError" type="redirectAction">
+				<param name="actionName">MethodErrorAction</param>
+			</result>
+			<result name="methodError">
+				/test.html
+			</result> -->
+			<result name="methodError"></result>
+		</global-results>
+		<!--  <action name="host_*" class="lpdata.web.HostAtion" method="{1}"  >-->
+			<!-- <result name="success">/test.html</result> -->
+			<!-- <result name="success">/form.jsp</result> -->
+		<!--</action>-->
+		<!-- <action name="host" class="lpdata.web.HostAtion" method="delete"  ></action>-->
+		<action name="get" class="lpdata.web.MenuAction" method="get"  ></action>
+	</package>
+	<package name="regedit" namespace="/regedit" extends="struts-default">
+		<action name="getFileList" class="lpdata.web.RegeditAction" method="getFileList"  ></action>
+	</package>
+	<package name="login" namespace="/" extends="struts-default">
+		<action name="*" class="lpdata.web.LoginAction" method="execute"  >
+			<result name="success" type="redirectAction" >
+			 	<!-- action的名字 -->
+	             <param name="actionName">login</param>
+	             <!-- action所在的命名空间 -->
+	             <param name="namespace">/</param>
+			</result>
+		</action>
+		<action name="login" class="lpdata.web.LoginAction" method="execute"  >
+			<result name="success" type="dispatcher" >/login.html</result>
+		</action>
+	</package>
+</struts>
