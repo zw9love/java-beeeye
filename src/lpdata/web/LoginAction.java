@@ -60,15 +60,32 @@ public class LoginAction extends ActionSupport {
 	}
 
 	public void loged() throws IOException, JSONException {
-		System.out.println("么么哒");
+		StringBuilder sb = new StringBuilder();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		try (BufferedReader reader = request.getReader()) {
+			char[] buff = new char[1024];
+			int len;
+			while ((len = reader.read(buff)) != -1) {
+				sb.append(buff, 0, len);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String str = sb.toString();
+		Map<String, String> list = new Gson().fromJson(str, new TypeToken<Map<String, Object>>() {
+		}.getType());
+
+		String token = list.get("token");
 		HttpSession session = request.getSession();
-		JSONObject role = (JSONObject) session.getAttribute("role");
+		JSONObject role = (JSONObject) session.getAttribute(token);
 		JSONObject roleObj = new JSONObject();
 		roleObj.put("role", role);
-		JSONObject json = MyUtil.getJson("成功", 200, roleObj);
-		System.out.println(json.toString());
+		JSONObject json = new JSONObject();
+		if (role == null)
+			json = MyUtil.getJson("失败", 606, "");
+		else
+			json = MyUtil.getJson("成功", 200, roleObj);
 		response.getWriter().write(json.toString());
 	}
 }

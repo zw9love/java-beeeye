@@ -29,11 +29,12 @@ public class LoginService {
 		String[] data = { json.get("login_name"), login_pwd };
 		JSONArray list = (JSONArray) dao.checkLogin(sql, data);
 		if (list.length() > 0) {
+			String token = MyUtil.getRandomString();
 			HttpSession session = request.getSession();
-			// System.out.println(list.get(0).toString());
-			session.setAttribute("role", list.get(0));
+			session.setAttribute(token, list.get(0));
+			session.setAttribute(((JSONObject) list.get(0)).get("login_name").toString(), token);
 			jsonObj = MyUtil.getJson("成功", 200, "");
-			resObj = MyUtil.getJson(MyUtil.getRandomString(), 200, jsonObj);
+			resObj = MyUtil.getJson(token, 200, jsonObj);
 		} else {
 			jsonObj = MyUtil.getJson("账号或者密码错误。", 606, "");
 			resObj = MyUtil.getJson("", 606, jsonObj);

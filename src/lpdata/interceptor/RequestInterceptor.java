@@ -15,7 +15,7 @@ public class RequestInterceptor extends MethodFilterInterceptor {
 
 	@Override
 	protected String doIntercept(ActionInvocation invocation) throws Exception {
-		System.out.println("进入了拦截器。");
+		System.out.println("进入了method拦截器。");
 		// System.out.println(invocation.getInvocationContext().getParameters());
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -27,7 +27,8 @@ public class RequestInterceptor extends MethodFilterInterceptor {
 		if (methodName == "POST")
 			return invocation.invoke();
 		else
-			return "methodError";
+			System.out.println("使用了get请求方式。");
+		return "methodError";
 
 		// // 前处理
 		// System.out.println("RequestMethodInterceptor 的前处理!");
