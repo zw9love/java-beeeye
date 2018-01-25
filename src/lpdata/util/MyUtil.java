@@ -1,5 +1,7 @@
 package lpdata.util;
 
+import java.util.UUID;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,5 +17,10 @@ public class MyUtil {
 			e.printStackTrace();
 		}
 		return jsonObj;
+	}
+
+	public static String getRandomString() {
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 24);
+		return uuid;
 	}
 }

@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import lpdata.util.DatabaseConnection;
 
 public class HostDao {
-	private String tableName = "beeeye_host";
 
 	// 获得list, 有list参数
 	public JSONArray getList(String sql, String[] data) {
