@@ -26,6 +26,7 @@ public class LoginService {
 		JSONObject jsonObj = new JSONObject();
 		JSONObject resObj = new JSONObject();
 		String login_pwd = MD5Util.encrypt(json.get("login_pwd").toString());
+		// login_pwd => G2LB1ELM7D5FC71D1M6E2EBMACE0L2F5
 		String[] data = { json.get("login_name"), login_pwd };
 		JSONArray list = (JSONArray) dao.checkLogin(sql, data);
 		if (list.length() > 0) {
